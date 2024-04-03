@@ -87,7 +87,7 @@ def generate_plot(theta, mock=False, redshift=False):
 
 # Main function
 def main():
-    st.title('SHMR_JSM')
+    st.title('SHMR Visualization')
 
     # Define default values for parameters
     default_theta = [10.5, 2.0, 0.2, 0.0, 0.0, 0.0]
