@@ -7,7 +7,7 @@ from matplotlib.colors import ListedColormap
 from matplotlib.cm import ScalarMappable
 import jsm_SHMR
 import jsm_stats
-
+st.set_page_config(layout="wide")
 
 mass_example = np.load("mass_example.npy")
 red_example = np.load("redshift_example.npy")
@@ -94,7 +94,7 @@ def generate_plot(theta, mock=False, redshift=False):
     axs['left'].set_xlim(9.2, 12)
     axs['left'].legend(fontsize=12, loc=2)
 
-    st.pyplot(fig, use_container_width=False)
+    st.pyplot(fig, use_container_width=True)
 
 # Main function
 def main():
