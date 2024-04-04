@@ -21,7 +21,7 @@ def generate_plot(theta, mock=False, redshift=False):
     stellar_example = jsm_SHMR.general(theta, mass_example, red_example, 1)
     theta_det = theta[:2] + [0, 0] + theta[4:]
 
-    fig, axs = plt.subplot_mosaic([['left', 'upper_right'],['left', 'lower_right']],figsize=(10, 6),layout="constrained")
+    fig, axs = plt.subplot_mosaic([['left', 'upper_right'],['left', 'lower_right']],figsize=(10, 8),layout="constrained")
 
     axs['left'].plot(halo_masses, jsm_SHMR.lgMs_B13(halo_masses, 0), color="darkorange", ls="--", label="Behroozi 2013", lw=1)
     axs['left'].plot(halo_masses, jsm_SHMR.lgMs_RP17(halo_masses, 0), color="darkmagenta", ls="-.", label="Rodriguez-Puebla 2017", lw=1)
@@ -58,7 +58,7 @@ def generate_plot(theta, mock=False, redshift=False):
 
         cax = axs['left'].inset_axes([0.57, 0.12, 0.4, 0.04])
         colorbar = fig.colorbar(sm, cax=cax, ticks=z_array, orientation='horizontal')
-        colorbar.axs['left'].tick_params(axis='both', which='major', labelsize=12)
+        colorbar.ax.tick_params(axis='both', which='major', labelsize=12)
         colorbar.set_label('$z_{\mathrm{acc}}$', fontsize=15)
 
     else:
