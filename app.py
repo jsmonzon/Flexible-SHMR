@@ -21,7 +21,7 @@ def generate_plot(theta, mock=False, redshift=False):
     stellar_example = jsm_SHMR.general(theta, mass_example, red_example, 1)
     theta_det = theta[:2] + [0, 0] + theta[4:]
 
-    fig, axs = plt.subplot_mosaic([['left', 'upper_right'],['left', 'lower_right']],figsize=(8, 6),layout="constrained")
+    fig, axs = plt.subplot_mosaic([['left', 'upper_right'],['left', 'lower_right']],figsize=(12, 10),layout="constrained")
 
     axs['left'].plot(halo_masses, jsm_SHMR.lgMs_B13(halo_masses, 0), color="darkorange", ls="--", label="Behroozi 2013", lw=1)
     axs['left'].plot(halo_masses, jsm_SHMR.lgMs_RP17(halo_masses, 0), color="darkmagenta", ls="-.", label="Rodriguez-Puebla 2017", lw=1)
