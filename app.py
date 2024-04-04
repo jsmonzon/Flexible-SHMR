@@ -7,7 +7,7 @@ from matplotlib.colors import ListedColormap
 from matplotlib.cm import ScalarMappable
 import jsm_SHMR
 import jsm_stats
-st.set_page_config(layout="wide")
+st.set_page_config(layout="centered")
 
 mass_example = np.load("mass_example.npy")
 red_example = np.load("redshift_example.npy")
