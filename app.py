@@ -18,10 +18,10 @@ def generate_plot(theta, mock=False, redshift=False):
 
     model_color="cornflowerblue"
 
-    stellar_example = jsm_SHMR.general(theta, mass_example, red_example, 1)
-    theta_det = theta[:2] + [0, 0] + theta[4:]
+    stellar_example = jsm_SHMR.general(theta, mass_example, red_example)
+    theta_det = [theta[0], theta[1], theta[2], theta[3], 0.0, 0.0]
 
-    fig, axs = plt.subplot_mosaic([['left', 'upper_right'],['left', 'lower_right']],figsize=(12, 8),layout="constrained")
+    fig, axs = plt.subplot_mosaic([['left', 'upper_right'],['left', 'lower_right']],figsize=(10, 6),layout="constrained")
 
     axs['left'].plot(halo_masses, jsm_SHMR.lgMs_B13(halo_masses, 0), color="darkorange", ls="--", label="Behroozi 2013", lw=1)
     axs['left'].plot(halo_masses, jsm_SHMR.lgMs_RP17(halo_masses, 0), color="darkmagenta", ls="-.", label="Rodriguez-Puebla 2017", lw=1)
@@ -33,11 +33,11 @@ def generate_plot(theta, mock=False, redshift=False):
         colors = cmap(np.linspace(0, 1, z_array.shape[0]))
         custom_cmap = ListedColormap(colors)
 
-        sigma = theta[2] + theta[3] * (halo_masses - 12)
+        sigma = theta[4] + theta[5] * (halo_masses - 12)
         sigma[sigma < 0] = 0.0
 
-        deterministic_early = jsm_SHMR.general(theta_det, halo_masses, z_max, Nsamples=1)
-        deterministic_presentday = jsm_SHMR.general(theta_det, halo_masses, 0, Nsamples=1)
+        deterministic_early = jsm_SHMR.general(theta_det, halo_masses, z_max)
+        deterministic_presentday = jsm_SHMR.general(theta_det, halo_masses, 0)
 
         if deterministic_early[0] > deterministic_presentday[0]:
             axs['left'].fill_between(halo_masses, deterministic_early + sigma, deterministic_presentday - sigma, color=model_color, alpha=0.3, zorder=0)
@@ -50,7 +50,7 @@ def generate_plot(theta, mock=False, redshift=False):
             axs['left'].fill_between(halo_masses, deterministic_presentday + 3 * sigma, deterministic_early - 3 * sigma, color=model_color, alpha=0.1, zorder=0)
 
         for i in z_array:   
-            axs['left'].plot(halo_masses, jsm_SHMR.general(theta_det, halo_masses, i, 1), lw=1, color=colors[i])
+            axs['left'].plot(halo_masses, jsm_SHMR.general(theta_det, halo_masses, i), lw=1, color=colors[i])
         
         norm = plt.Normalize(0, z_max-1)
         sm = ScalarMappable(cmap=custom_cmap, norm=norm)
@@ -62,10 +62,10 @@ def generate_plot(theta, mock=False, redshift=False):
         colorbar.set_label('$z_{\mathrm{acc}}$', fontsize=15)
 
     else:
-        det = jsm_SHMR.general(theta_det, halo_masses, 0, 1)
+        det = jsm_SHMR.general(theta_det, halo_masses, 0)
         axs['left'].plot(halo_masses, det, color=model_color, label="Model", lw=1)
 
-        sigma = theta[2] + theta[3]*(halo_masses-12)
+        sigma = theta[4] + theta[5]*(halo_masses-12)
         
         axs['left'].fill_between(halo_masses, det - sigma, det + sigma, color=model_color, alpha=0.3) 
         axs['left'].fill_between(halo_masses, det - 2*sigma, det + 2*sigma, color=model_color, alpha=0.2) 
@@ -98,11 +98,18 @@ def generate_plot(theta, mock=False, redshift=False):
 
 # Main function
 def main():
+
+    # alpha = theta[1]
+    # beta = theta[2]
+    # gamma = theta[3]
+    # sigma = theta[4]
+    # nu = theta[5]
+
     # Define default values for parameters
-    default_theta = [10.5, 2.0, 0.2, 0.0, 0.0, 0.0]
-    limits = [[10.0,11.0], [1.0,4.0], [0.0,1.5], [-1.0,0.0], [-3.0,2.0], [0.0,3.0]]
-    param_labels = ["$M_{*}$", "$\\alpha$", "$\\sigma$"," $\\gamma$", "$\\beta$", "$\\tau$"]
-    spacing = [0.1, 0.01, 0.01, 0.01, 0.01, 0.1]
+    default_theta = [10.5, 2.0, 0.0, 0.0, 0.2, 0.0]
+    limits = [[10.0,11.0], [1.0,4.0], [-2.0,2.0], [0.0,1.5], [0.0,2.0], [0.0,2.0]]
+    param_labels = ["$M_{*}$", "$\\alpha$", "$\\beta$"," $\\gamma$", "$\\sigma$", "$\\nu$"]
+    spacing = [0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
 
     with st.sidebar:
         st.title('Parameters ($\\vec{\\theta}$)')
