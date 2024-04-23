@@ -107,9 +107,9 @@ def main():
 
     # Define default values for parameters
     default_theta = [10.5, 2.0, 0.0, 0.0, 0.2, 0.0]
-    limits = [[10.0,11.0], [1.0,4.0], [-2.0,2.0], [0.0,1.5], [0.0,2.0], [0.0,2.0]]
+    limits = [[10.0,11.0], [1.0,4.0], [-2.0,1.0], [0.0,1.5], [0.0,1.5], [-0.5,0.0]]
     param_labels = ["$M_{*}$", "$\\alpha$", "$\\beta$"," $\\gamma$", "$\\sigma$", "$\\nu$"]
-    spacing = [0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
+    spacing = [0.1, 0.01, 0.01, 0.05, 0.05, 0.05]
 
     with st.sidebar:
         st.title('Parameters ($\\vec{\\theta}$)')
